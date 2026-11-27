@@ -18,6 +18,6 @@
 - O usuário customizado `users.User` usa email como identificador e deve permanecer definido antes da primeira migração de produção.
 - Schemas Pydantic/Django Ninja são contratos públicos; mantenha APIs sob `/api/v1` e documente mudanças em `docs/API.md`.
 - Toda consulta a dados de usuário deve derivar o proprietário da identidade autenticada no servidor. Nunca aceite `user_id` do cliente como autorização.
-- Login social Google e os endpoints móveis de autenticação/recuperação ainda não estão implementados. Não habilite provedor OAuth sem especificação, credenciais e fluxo de vinculação de conta.
+- Autenticação móvel por email/senha e recuperação por token estão em `revix_backend/authentication/`; provedores são registrados ali para permitir expansão. Google OAuth continua desativado até haver especificação, credenciais e fluxo de vinculação de conta.
 - Mudanças no modelo devem incluir migrações e testes. Preserve os dados locais do app; sincronização com backend exige contrato e estratégia de conflito definidos.
 - Swagger e OpenAPI ficam disponíveis em desenvolvimento apenas para usuários staff; ambos são desativados em produção.

@@ -1,5 +1,6 @@
 # ruff: noqa: ERA001, E501
 """Base settings to build other settings files upon."""
+
 import os
 from pathlib import Path
 
@@ -96,6 +97,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "revix_backend.authentication.apps.AuthenticationConfig",
     "revix_backend.users",
     # Your stuff: custom apps go here
 ]
@@ -131,6 +133,20 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
+
+# Mobile authentication defaults. Production uses the configured Redis cache;
+# local and test settings may override these values for isolated environments.
+AUTH_ACCESS_TOKEN_TTL_SECONDS = 15 * 60
+AUTH_REFRESH_TOKEN_TTL_SECONDS = 30 * 24 * 60 * 60
+AUTH_PASSWORD_RESET_TOKEN_TTL_SECONDS = 30 * 60
+AUTH_CLIENT_IP_HEADER = env("AUTH_CLIENT_IP_HEADER", default="")
+AUTH_RATE_LIMITS = {
+    "register": {"ip": (5, 3600), "email": (5, 3600)},
+    "login": {"ip": (10, 60), "email": (5, 60)},
+    "refresh": {"ip": (30, 60)},
+    "password_reset_request": {"ip": (10, 3600), "email": (3, 3600)},
+    "password_reset_confirm": {"ip": (10, 3600), "email": (5, 3600)},
+}
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {

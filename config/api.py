@@ -22,6 +22,7 @@ api = NinjaAPI(
 )
 
 api.add_router("/v1/users/", "revix_backend.users.api.views.router")
+api.add_router("/v1/auth/", "revix_backend.authentication.api.views.router")
 
 
 @api.get("/v1/health", auth=None, response=HealthResponse, tags=["system"])
